@@ -1,0 +1,360 @@
+{% extends "base.html" %}
+
+{% block title %}
+Shop | ZAHRA CREATION
+{% endblock %}
+
+
+{% block content %}
+
+<section class="section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <p class="eyebrow">
+                ZAHRA CREATION
+            </p>
+
+            <h1>
+                Our Collection
+            </h1>
+
+            <p>
+                Discover elegant bags designed
+                for every occasion.
+            </p>
+
+        </div>
+
+
+        <!-- SEARCH AND FILTERS -->
+
+        <div
+            style="
+                margin-bottom: 40px;
+                padding: 20px;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                background: var(--warm-white);
+                box-shadow: var(--shadow);
+            "
+        >
+
+            <form
+                method="get"
+                style="
+                    display: grid;
+                    grid-template-columns:
+                        minmax(200px, 2fr)
+                        minmax(150px, 1fr)
+                        minmax(150px, 1fr)
+                        auto;
+                    gap: 12px;
+                    align-items: end;
+                "
+            >
+
+                <div class="form-group">
+
+                    <label for="search">
+                        Search
+                    </label>
+
+                    <input
+                        id="search"
+                        type="text"
+                        name="q"
+                        value="{{ search_query }}"
+                        placeholder="Search bags..."
+                        class="form-control"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        class="form-control"
+                    >
+
+                        <option value="">
+                            All Categories
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option
+                                value="{{ category.slug }}"
+                                {% if selected_category == category.slug %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ category.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="sort">
+                        Sort By
+                    </label>
+
+                    <select
+                        id="sort"
+                        name="sort"
+                        class="form-control"
+                    >
+
+                        <option value="">
+                            Newest
+                        </option>
+
+                        <option
+                            value="price_low"
+                            {% if selected_sort == "price_low" %}
+                                selected
+                            {% endif %}
+                        >
+                            Price: Low to High
+                        </option>
+
+                        <option
+                            value="price_high"
+                            {% if selected_sort == "price_high" %}
+                                selected
+                            {% endif %}
+                        >
+                            Price: High to Low
+                        </option>
+
+                        <option
+                            value="best_selling"
+                            {% if selected_sort == "best_selling" %}
+                                selected
+                            {% endif %}
+                        >
+                            Best Selling
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Apply
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        {% if products %}
+
+            <div
+                style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                    color: var(--muted);
+                    font-size: 14px;
+                "
+            >
+
+                <span>
+                    {{ products|length }}
+                    product{{ products|length|pluralize }}
+                </span>
+
+                {% if search_query %}
+
+                    <span>
+                        Results for "{{ search_query }}"
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="product-grid">
+
+                {% for product in products %}
+
+                    <a
+                        href="{% url 'products:product_detail' product.slug %}"
+                        class="product-card"
+                    >
+
+                        <div class="product-image">
+
+                            {% if product.main_image %}
+
+                                <img
+                                    src="{{ product.main_image.url }}"
+                                    alt="{{ product.name }}"
+                                >
+
+                            {% else %}
+
+                                <div
+                                    style="
+                                        width: 100%;
+                                        height: 100%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        color: var(--brown);
+                                        font-family:
+                                            Georgia,
+                                            'Times New Roman',
+                                            serif;
+                                        font-size: 22px;
+                                    "
+                                >
+                                    ZAHRA
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if product.discount_percentage > 0 %}
+
+                                <span class="product-badge">
+                                    {{ product.discount_percentage }}% OFF
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="product-info">
+
+                            <p
+                                style="
+                                    margin-bottom: 5px;
+                                    color: var(--muted);
+                                    font-size: 11px;
+                                    text-transform: uppercase;
+                                    letter-spacing: 0.08em;
+                                "
+                            >
+                                {{ product.category.name }}
+                            </p>
+
+
+                            <h2 class="product-name">
+                                {{ product.name }}
+                            </h2>
+
+
+                            <div class="product-price">
+
+                                ₹{{ product.discounted_price|floatformat:2 }}
+
+                                {% if product.discount_percentage > 0 %}
+
+                                    <span class="product-old-price">
+                                        ₹{{ product.price|floatformat:2 }}
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            {% if product.stock <= 0 %}
+
+                                <span class="product-stock stock-out">
+                                    Out of Stock
+                                </span>
+
+                            {% elif product.stock <= 5 %}
+
+                                <span class="product-stock stock-low">
+                                    Only {{ product.stock }} left
+                                </span>
+
+                            {% else %}
+
+                                <span class="product-stock stock-in">
+                                    In Stock
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <h3>
+                    No bags found
+                </h3>
+
+                {% if search_query %}
+
+                    <p>
+                        We couldn't find anything matching
+                        "{{ search_query }}".
+                    </p>
+
+                {% else %}
+
+                    <p>
+                        Our collection is being prepared.
+                        Please check back soon.
+                    </p>
+
+                {% endif %}
+
+                <div style="margin-top: 20px;">
+
+                    <a
+                        href="{% url 'products:shop' %}"
+                        class="btn btn-secondary"
+                    >
+                        View All Products
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %} 

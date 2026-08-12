@@ -1,0 +1,229 @@
+{% extends "admin/base.html" %}
+
+{% load i18n static %}
+
+{% block content %}
+
+<div class="zahra-dashboard">
+
+    <section class="dashboard-hero">
+
+        <div>
+
+            <p class="dashboard-eyebrow">
+                ZAHRA CREATION
+            </p>
+
+            <h1>
+                Welcome to your Admin Dashboard
+            </h1>
+
+            <p>
+                Manage your products, categories, customers and orders
+                from one beautiful workspace.
+            </p>
+
+        </div>
+
+        <div class="hero-bag">
+            👜
+        </div>
+
+    </section>
+
+
+    <section class="quick-actions">
+
+        <a href="/admin/products/product/add/" class="quick-card">
+
+            <span class="quick-icon">
+                ＋
+            </span>
+
+            <strong>
+                Add Product
+            </strong>
+
+            <small>
+                Create a new bag
+            </small>
+
+        </a>
+
+
+        <a href="/admin/products/product/" class="quick-card">
+
+            <span class="quick-icon">
+                👜
+            </span>
+
+            <strong>
+                Products
+            </strong>
+
+            <small>
+                Manage your collection
+            </small>
+
+        </a>
+
+
+        <a href="/admin/products/category/" class="quick-card">
+
+            <span class="quick-icon">
+                🗂️
+            </span>
+
+            <strong>
+                Categories
+            </strong>
+
+            <small>
+                Organize products
+            </small>
+
+        </a>
+
+
+        <a href="/admin/orders/order/" class="quick-card">
+
+            <span class="quick-icon">
+                📦
+            </span>
+
+            <strong>
+                Orders
+            </strong>
+
+            <small>
+                View customer orders
+            </small>
+
+        </a>
+
+    </section>
+
+
+    <section class="admin-apps">
+
+        {% if app_list %}
+
+            {% for app in app_list %}
+
+                <div class="app-panel">
+
+                    <div class="app-panel-header">
+
+                        <h2>
+                            {{ app.name }}
+                        </h2>
+
+                    </div>
+
+
+                    <div class="model-grid">
+
+                        {% for model in app.models %}
+
+                            <div class="model-card">
+
+                                <div class="model-card-title">
+
+                                    {% if model.object_name == "Product" %}
+                                        👜
+                                    {% elif model.object_name == "Category" %}
+                                        🗂️
+                                    {% elif model.object_name == "Order" %}
+                                        📦
+                                    {% elif model.object_name == "User" %}
+                                        👤
+                                    {% else %}
+                                        ◦
+                                    {% endif %}
+
+                                    <strong>
+                                        {{ model.name }}
+                                    </strong>
+
+                                </div>
+
+
+                                <div class="model-actions">
+
+                                    {% if model.admin_url %}
+
+                                        <a
+                                            href="{{ model.admin_url }}"
+                                            class="view-link"
+                                        >
+                                            View
+                                        </a>
+
+                                    {% endif %}
+
+
+                                    {% if model.add_url %}
+
+                                        <a
+                                            href="{{ model.add_url }}"
+                                            class="add-link"
+                                        >
+                                            Add
+                                        </a>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-admin">
+
+                <h2>
+                    No applications available
+                </h2>
+
+                <p>
+                    Your admin applications will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <section class="admin-note">
+
+        <span class="note-icon">
+            ✦
+        </span>
+
+        <div>
+
+            <strong>
+                ZAHRA CREATION
+            </strong>
+
+            <p>
+                Your premium bag collection, managed beautifully.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

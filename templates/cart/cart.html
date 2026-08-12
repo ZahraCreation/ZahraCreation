@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Shopping Bag | ZAHRA CREATION{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+```
+<div class="cart-header">
+    <p class="eyebrow">ZAHRA CREATION</p>
+
+    <h1>Your Shopping Bag</h1>
+
+    <p>
+        Review your selected pieces before checkout.
+    </p>
+</div>
+
+{% if messages %}
+    <div class="cart-messages">
+        {% for message in messages %}
+            <div class="cart-message {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if cart_items %}
+
+    <div class="cart-layout">
+
+        <div class="cart-items">
+
+            {% for item in cart_items %}
+
+                <article class="cart-item">
+
+                    <div class="cart-item-image">
+
+                        {% if item.product.main_image %}
+
+                            <img
+                                src="{{ item.product.main_image.url }}"
+                                alt="{{ item.product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div class="cart-image-placeholder">
+                                No Image
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="cart-item-details">
+
+                        <p class="cart-item-category">
+                            {{ item.product.category.name }}
+                        </p>
+
+                        <h2>
+                            {{ item.product.name }}
+                        </h2>
+
+                        <p>
+                            SKU: {{ item.product.sku }}
+                        </p>
+
+                        <div class="cart-item-price">
+                            ₹{{ item.unit_price }}
+                        </div>
+
+                        {% if item.product.stock > 0 %}
+
+                            <p class="cart-stock available">
+                                In Stock · {{ item.product.stock }} available
+                            </p>
+
+                        {% else %}
+
+                            <p class="cart-stock unavailable">
+                                Out of Stock
+                            </p>
+
+                        {% endif %}
+
+                        <div class="cart-quantity">
+
+                            <span>
+                                Quantity:
+                            </span>
+
+                            <div class="quantity-controls">
+
+                                <form
+                                    method="post"
+                                    action="{% url 'cart:decrease' item.product.id %}"
+                                >
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="quantity-button"
+                                        aria-label="Decrease quantity"
+                                    >
+                                        −
+                                    </button>
+                                </form>
+
+                                <strong>
+                                    {{ item.quantity }}
+                                </strong>
+
+                                <form
+                                    method="post"
+                                    action="{% url 'cart:increase' item.product.id %}"
+                                >
+                                    {% csrf_token %}
+
+                                    <button
+                                        type="submit"
+                                        class="quantity-button"
+                                        aria-label="Increase quantity"
+                                    >
+                                        +
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                        <div class="cart-item-total">
+
+                            Item Total:
+
+                            <strong>
+                                ₹{{ item.total }}
+                            </strong>
+
+                        </div>
+
+                        <form
+                            method="post"
+                            action="{% url 'cart:remove' item.product.id %}"
+                            class="remove-cart-form"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="remove-item-button"
+                            >
+                                Remove from Bag
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+        <aside class="cart-summary">
+
+            <h2>
+                Order Summary
+            </h2>
+
+            <div class="summary-row">
+
+                <span>
+                    Items
+                </span>
+
+                <span>
+                    {{ cart_count }}
+                </span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    ₹{{ subtotal }}
+                </span>
+
+            </div>
+
+            <div class="summary-row">
+
+                <span>
+                    Shipping
+                </span>
+
+                <span>
+                    Calculated at checkout
+                </span>
+
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ total }}
+                </strong>
+
+            </div>
+
+            <a href="{% url 'cart:checkout' %}" class="checkout-button">
+                Proceed to Checkout
+            </a>
+
+            <a
+                href="{% url 'products:shop' %}"
+                class="continue-shopping"
+            >
+                Continue Shopping
+            </a>
+
+        </aside>
+
+    </div>
+
+{% else %}
+
+    <div class="empty-cart">
+
+        <div class="empty-cart-icon">
+            🛍
+        </div>
+
+        <h2>
+            Your bag is waiting
+        </h2>
+
+        <p>
+            You haven't added anything to your bag yet.
+            Explore our collection and find something
+            made just for you.
+        </p>
+
+        <a
+            href="{% url 'products:shop' %}"
+            class="shop-button"
+        >
+            Explore Our Collection
+        </a>
+
+    </div>
+
+{% endif %}
+```
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,373 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Track Order {{ order.order_id }} | ZAHRA CREATION{% endblock %}
+
+{% block content %}
+
+<style>
+    .tracking-page {
+        min-height: 85vh;
+        padding: 60px 20px 100px;
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(220, 195, 180, 0.25),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at 90% 90%,
+                rgba(200, 180, 160, 0.20),
+                transparent 35%
+            ),
+            #faf7f3;
+    }
+
+    .tracking-container {
+        max-width: 850px;
+        margin: auto;
+    }
+
+    .tracking-header {
+        text-align: center;
+        margin-bottom: 45px;
+    }
+
+    .tracking-eyebrow {
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #927a6c;
+        margin-bottom: 10px;
+    }
+
+    .tracking-header h1 {
+        margin: 0;
+        color: #332923;
+        font-size: 38px;
+    }
+
+    .tracking-header p {
+        color: #81736b;
+        margin-top: 10px;
+    }
+
+    .tracking-card {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #eadfd8;
+        border-radius: 24px;
+        padding: 35px;
+        box-shadow: 0 15px 45px rgba(70, 50, 40, 0.08);
+    }
+
+    .tracking-order-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid #eee4de;
+        margin-bottom: 35px;
+    }
+
+    .tracking-order-number {
+        font-size: 20px;
+        font-weight: 700;
+        color: #332923;
+    }
+
+    .tracking-date {
+        color: #897b73;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .current-status {
+        padding: 9px 15px;
+        border-radius: 999px;
+        background: #eee5dd;
+        color: #5e4c41;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .timeline {
+        position: relative;
+        margin-left: 10px;
+    }
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 19px;
+        top: 20px;
+        bottom: 20px;
+        width: 2px;
+        background: #e5d9d0;
+    }
+
+    .timeline-step {
+        position: relative;
+        display: flex;
+        gap: 22px;
+        min-height: 105px;
+    }
+
+    .timeline-icon {
+        position: relative;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eee5de;
+        color: #89766a;
+        font-size: 17px;
+        border: 4px solid white;
+        box-shadow: 0 2px 8px rgba(60, 45, 35, 0.08);
+    }
+
+    .timeline-step.completed .timeline-icon {
+        background: #46372f;
+        color: white;
+    }
+
+    .timeline-step.current .timeline-icon {
+        box-shadow:
+            0 0 0 5px rgba(70, 55, 47, 0.10),
+            0 4px 12px rgba(60, 45, 35, 0.12);
+    }
+
+    .timeline-content {
+        padding-top: 3px;
+    }
+
+    .timeline-content h3 {
+        margin: 0;
+        color: #3a2e28;
+        font-size: 17px;
+    }
+
+    .timeline-content p {
+        margin: 7px 0 0;
+        color: #887a72;
+        line-height: 1.5;
+        font-size: 14px;
+    }
+
+    .cancelled-box {
+        background: #f9e6e6;
+        border: 1px solid #eccaca;
+        border-radius: 14px;
+        padding: 20px;
+        color: #823d3d;
+    }
+
+    .cancelled-box h3 {
+        margin-top: 0;
+    }
+
+    .tracking-summary {
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px solid #eee4de;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .tracking-total-label {
+        color: #897a72;
+        font-size: 13px;
+    }
+
+    .tracking-total {
+        font-size: 24px;
+        font-weight: 700;
+        color: #332923;
+    }
+
+    .back-button {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 20px;
+        border-radius: 10px;
+        background: #f0e7df;
+        color: #4c3d35;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .back-button:hover {
+        background: #e7dbd1;
+    }
+
+    @media (max-width: 650px) {
+
+        .tracking-card {
+            padding: 25px 20px;
+        }
+
+        .tracking-header h1 {
+            font-size: 30px;
+        }
+
+        .tracking-order-info {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .tracking-summary {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+</style>
+
+
+<section class="tracking-page">
+
+    <div class="tracking-container">
+
+        <div class="tracking-header">
+
+            <div class="tracking-eyebrow">
+                ZAHRA CREATION
+            </div>
+
+            <h1>
+                Track Your Order
+            </h1>
+
+            <p>
+                Follow your order from our studio to your doorstep.
+            </p>
+
+        </div>
+
+
+        <div class="tracking-card">
+
+            <div class="tracking-order-info">
+
+                <div>
+
+                    <div class="tracking-order-number">
+                        Order #{{ order.order_id }}
+                    </div>
+
+                    <div class="tracking-date">
+                        Placed
+                        {{ order.created_at|date:"d M Y, h:i A" }}
+                    </div>
+
+                </div>
+
+
+                <div class="current-status">
+
+                    {{ order.get_order_status_display }}
+
+                </div>
+
+            </div>
+
+
+            {% if order.order_status == "cancelled" %}
+
+                <div class="cancelled-box">
+
+                    <h3>
+                        Order Cancelled
+                    </h3>
+
+                    <p>
+                        This order has been cancelled.
+                        If you believe this is a mistake,
+                        please contact ZAHRA CREATION.
+                    </p>
+
+                </div>
+
+            {% else %}
+
+                <div class="timeline">
+
+                    {% for step in tracking_steps %}
+
+                        <div
+                            class="
+                                timeline-step
+                                {% if step.completed %}completed{% endif %}
+                                {% if step.current %}current{% endif %}
+                            "
+                        >
+
+                            <div class="timeline-icon">
+
+                                {% if step.completed %}
+                                    ✓
+                                {% else %}
+                                    •
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="timeline-content">
+
+                                <h3>
+                                    {{ step.label }}
+                                </h3>
+
+                                <p>
+                                    {{ step.description }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <div class="tracking-summary">
+
+                <div>
+
+                    <div class="tracking-total-label">
+                        Order Total
+                    </div>
+
+                    <div class="tracking-total">
+                        ₹{{ order.total }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="{% url 'orders:my_orders' %}"
+                class="back-button"
+            >
+                ← Back to My Orders
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

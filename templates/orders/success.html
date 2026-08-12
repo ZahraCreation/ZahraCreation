@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmed | ZAHRA CREATION{% endblock %}
+
+{% block content %}
+
+<div class="order-success-page">
+
+    <div class="order-success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <p class="eyebrow">
+            ZAHRA CREATION
+        </p>
+
+        <h1>
+            Thank You For Your Order!
+        </h1>
+
+        <p>
+            Your order has been successfully placed.
+        </p>
+
+
+        <div class="order-number">
+
+            <span>
+                Order Number
+            </span>
+
+            <strong>
+                {{ order.order_id }}
+            </strong>
+
+        </div>
+
+
+        <div class="success-details">
+
+            <div>
+                <span>
+                    Customer
+                </span>
+
+                <strong>
+                    {{ order.customer_name }}
+                </strong>
+            </div>
+
+
+            <div>
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ order.total }}
+                </strong>
+            </div>
+
+
+            <div>
+                <span>
+                    Payment
+                </span>
+
+                <strong>
+                    {{ order.get_payment_method_display }}
+                </strong>
+            </div>
+
+
+            <div>
+                <span>
+                    Status
+                </span>
+
+                <strong>
+                    {{ order.get_order_status_display }}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <a
+            href="{% url 'products:shop' %}"
+            class="success-button"
+        >
+            Continue Shopping
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

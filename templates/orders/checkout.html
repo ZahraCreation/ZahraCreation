@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Checkout | ZAHRA CREATION{% endblock %}
+
+{% block content %}
+
+<div class="checkout-page">
+
+    <div class="checkout-header">
+
+        <p class="eyebrow">
+            ZAHRA CREATION
+        </p>
+
+        <h1>
+            Checkout
+        </h1>
+
+        <p>
+            Complete your details to place your order.
+        </p>
+
+    </div>
+
+
+    <div class="checkout-layout">
+
+        <section class="checkout-form-card">
+
+            <h2>
+                Delivery Details
+            </h2>
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                {% if form.non_field_errors %}
+
+                    <div class="checkout-error">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                {% endif %}
+
+
+                <div class="checkout-grid">
+
+                    <div class="checkout-field full">
+
+                        <label>
+                            Full Name
+                        </label>
+
+                        {{ form.customer_name }}
+
+                        {{ form.customer_name.errors }}
+
+                    </div>
+
+
+                    <div class="checkout-field">
+
+                        <label>
+                            Email
+                        </label>
+
+                        {{ form.email }}
+
+                        {{ form.email.errors }}
+
+                    </div>
+
+
+                    <div class="checkout-field">
+
+                        <label>
+                            Phone
+                        </label>
+
+                        {{ form.phone }}
+
+                        {{ form.phone.errors }}
+
+                    </div>
+
+
+                    <div class="checkout-field full">
+
+                        <label>
+                            Address
+                        </label>
+
+                        {{ form.address }}
+
+                        {{ form.address.errors }}
+
+                    </div>
+
+
+                    <div class="checkout-field">
+
+                        <label>
+                            City
+                        </label>
+
+                        {{ form.city }}
+
+                        {{ form.city.errors }}
+
+                    </div>
+
+
+                    <div class="checkout-field">
+
+                        <label>
+                            State
+                        </label>
+
+                        {{ form.state }}
+
+                        {{ form.state.errors }}
+
+                    </div>
+
+
+                    <div class="checkout-field">
+
+                        <label>
+                            PIN Code
+                        </label>
+
+                        {{ form.pincode }}
+
+                        {{ form.pincode.errors }}
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-section">
+
+                    <h2>
+                        Payment Method
+                    </h2>
+
+                    <div class="payment-option">
+
+                        {{ form.payment_method }}
+
+                    </div>
+
+                    <p class="payment-note">
+                        Online payment will be connected
+                        after the checkout system is tested.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="place-order-button"
+                >
+                    Place Order
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <aside class="checkout-summary">
+
+            <h2>
+                Your Order
+            </h2>
+
+
+            {% for item in cart_items %}
+
+                <div class="checkout-product">
+
+                    <div class="checkout-product-image">
+
+                        {% if item.product.main_image %}
+
+                            <img
+                                src="{{ item.product.main_image.url }}"
+                                alt="{{ item.product.name }}"
+                            >
+
+                        {% else %}
+
+                            <div>
+                                No Image
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="checkout-product-info">
+
+                        <strong>
+                            {{ item.product.name }}
+                        </strong>
+
+                        <span>
+                            Qty: {{ item.quantity }}
+                        </span>
+
+                        <span>
+                            ₹{{ item.total }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+            <div class="checkout-summary-line">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    ₹{{ subtotal }}
+                </span>
+
+            </div>
+
+
+            <div class="checkout-summary-line">
+
+                <span>
+                    Shipping
+                </span>
+
+                <span>
+                    Free
+                </span>
+
+            </div>
+
+
+            <div class="checkout-summary-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ total }}
+                </strong>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,381 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}My Orders | ZAHRA CREATION{% endblock %}
+
+{% block content %}
+
+<style>
+    .orders-page {
+        min-height: 80vh;
+        padding: 60px 20px 90px;
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(220, 190, 180, 0.22),
+                transparent 35%
+            ),
+            radial-gradient(
+                circle at bottom right,
+                rgba(190, 170, 150, 0.18),
+                transparent 35%
+            ),
+            #faf7f3;
+    }
+
+    .orders-container {
+        max-width: 1100px;
+        margin: auto;
+    }
+
+    .orders-heading {
+        margin-bottom: 35px;
+    }
+
+    .orders-eyebrow {
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #8d7465;
+        margin-bottom: 10px;
+    }
+
+    .orders-heading h1 {
+        margin: 0;
+        font-size: 42px;
+        color: #332923;
+        font-weight: 600;
+    }
+
+    .orders-heading p {
+        color: #756860;
+        margin-top: 10px;
+    }
+
+    .orders-list {
+        display: grid;
+        gap: 20px;
+    }
+
+    .order-card {
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid #eadfd8;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 12px 35px rgba(70, 50, 40, 0.07);
+    }
+
+    .order-card-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .order-number {
+        font-size: 18px;
+        font-weight: 700;
+        color: #332923;
+    }
+
+    .order-date {
+        color: #8a7b73;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .status {
+        display: inline-flex;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+        background: #f0e7df;
+        color: #725b4d;
+    }
+
+    .status-delivered {
+        background: #e3f1e5;
+        color: #37633d;
+    }
+
+    .status-shipped {
+        background: #e3edf7;
+        color: #365b7a;
+    }
+
+    .status-cancelled {
+        background: #f8e1e1;
+        color: #8a3e3e;
+    }
+
+    .order-items {
+        border-top: 1px solid #eee4de;
+        border-bottom: 1px solid #eee4de;
+        padding: 15px 0;
+    }
+
+    .order-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 7px 0;
+        color: #51443d;
+    }
+
+    .order-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding-top: 20px;
+    }
+
+    .order-total-label {
+        color: #85756c;
+        font-size: 13px;
+    }
+
+    .order-total {
+        font-size: 21px;
+        font-weight: 700;
+        color: #332923;
+    }
+
+    .order-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .order-button {
+        display: inline-block;
+        padding: 11px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+
+    .order-button-primary {
+        background: #46372f;
+        color: white;
+    }
+
+    .order-button-primary:hover {
+        background: #2f241f;
+    }
+
+    .order-button-secondary {
+        background: #f3ebe5;
+        color: #4d3d34;
+    }
+
+    .order-button-secondary:hover {
+        background: #e9ddd4;
+    }
+
+    .empty-orders {
+        background: white;
+        border: 1px solid #eadfd8;
+        border-radius: 20px;
+        padding: 60px 25px;
+        text-align: center;
+    }
+
+    .empty-orders h2 {
+        color: #332923;
+    }
+
+    .empty-orders p {
+        color: #81736b;
+        margin-bottom: 25px;
+    }
+
+    @media (max-width: 700px) {
+
+        .orders-heading h1 {
+            font-size: 32px;
+        }
+
+        .order-card-top,
+        .order-bottom {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .order-actions {
+            width: 100%;
+        }
+
+        .order-button {
+            flex: 1;
+            text-align: center;
+        }
+    }
+</style>
+
+
+<section class="orders-page">
+
+    <div class="orders-container">
+
+        <div class="orders-heading">
+
+            <div class="orders-eyebrow">
+                ZAHRA CREATION
+            </div>
+
+            <h1>My Orders</h1>
+
+            <p>
+                View your purchases and track your orders.
+            </p>
+
+        </div>
+
+
+        {% if orders %}
+
+            <div class="orders-list">
+
+                {% for order in orders %}
+
+                    <article class="order-card">
+
+                        <div class="order-card-top">
+
+                            <div>
+
+                                <div class="order-number">
+                                    Order #{{ order.order_id }}
+                                </div>
+
+                                <div class="order-date">
+                                    {{ order.created_at|date:"d M Y, h:i A" }}
+                                </div>
+
+                            </div>
+
+
+                            {% if order.order_status == "delivered" %}
+
+                                <span class="status status-delivered">
+                                    Delivered
+                                </span>
+
+                            {% elif order.order_status == "shipped" %}
+
+                                <span class="status status-shipped">
+                                    Shipped
+                                </span>
+
+                            {% elif order.order_status == "cancelled" %}
+
+                                <span class="status status-cancelled">
+                                    Cancelled
+                                </span>
+
+                            {% else %}
+
+                                <span class="status">
+                                    {{ order.get_order_status_display }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="order-items">
+
+                            {% for item in order.items.all %}
+
+                                <div class="order-item">
+
+                                    <span>
+                                        {{ item.product_name }}
+                                        × {{ item.quantity }}
+                                    </span>
+
+                                    <strong>
+                                        ₹{{ item.total }}
+                                    </strong>
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div class="order-bottom">
+
+                            <div>
+
+                                <div class="order-total-label">
+                                    Total
+                                </div>
+
+                                <div class="order-total">
+                                    ₹{{ order.total }}
+                                </div>
+
+                            </div>
+
+
+                            <div class="order-actions">
+
+                                <a
+                                    href="{% url 'orders:order_detail' order.order_id %}"
+                                    class="order-button order-button-secondary"
+                                >
+                                    View Order
+                                </a>
+
+                                <a
+                                    href="{% url 'orders:track_order' order.order_id %}"
+                                    class="order-button order-button-primary"
+                                >
+                                    Track Order
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-orders">
+
+                <h2>No orders yet</h2>
+
+                <p>
+                    You haven't placed an order with ZAHRA CREATION yet.
+                </p>
+
+                <a
+                    href="{% url 'products:shop' %}"
+                    class="order-button order-button-primary"
+                >
+                    Explore Collection
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

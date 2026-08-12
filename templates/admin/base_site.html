@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}
+
+{% block title %}
+    {% if title %}
+        {{ title }} | ZAHRA CREATION
+    {% else %}
+        ZAHRA CREATION Administration
+    {% endif %}
+{% endblock %}
+
+{% block branding %}
+
+<a href="{% url 'admin:index' %}" class="zahra-brand">
+
+    <span class="brand-mark">
+        Z
+    </span>
+
+    <span class="brand-text">
+        <strong>ZAHRA</strong>
+        <small>CREATION</small>
+    </span>
+
+</a>
+
+{% endblock %}
+
+{% block nav-global %}
+{% endblock %}

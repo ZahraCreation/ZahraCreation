@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Order {{ order.order_id }} | ZAHRA CREATION{% endblock %}
+
+{% block content %}
+
+<style>
+    .order-detail-page {
+        min-height: 80vh;
+        padding: 60px 20px 90px;
+        background: #faf7f3;
+    }
+
+    .order-detail-container {
+        max-width: 1000px;
+        margin: auto;
+    }
+
+    .order-detail-header {
+        margin-bottom: 30px;
+    }
+
+    .order-detail-header h1 {
+        margin: 0;
+        color: #332923;
+    }
+
+    .order-detail-header p {
+        color: #81736b;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 22px;
+    }
+
+    .detail-card {
+        background: white;
+        border: 1px solid #eadfd8;
+        border-radius: 18px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(70, 50, 40, 0.06);
+    }
+
+    .detail-card h2 {
+        color: #332923;
+        margin-top: 0;
+    }
+
+    .detail-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 13px 0;
+        border-bottom: 1px solid #eee5df;
+    }
+
+    .detail-item:last-child {
+        border-bottom: none;
+    }
+
+    .detail-item span {
+        color: #81736b;
+    }
+
+    .detail-item strong {
+        color: #3c302a;
+        text-align: right;
+    }
+
+    .address {
+        color: #5d5049;
+        line-height: 1.7;
+    }
+
+    .track-button {
+        display: block;
+        text-align: center;
+        background: #46372f;
+        color: white;
+        padding: 13px;
+        border-radius: 10px;
+        text-decoration: none;
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    .track-button:hover {
+        background: #2f241f;
+    }
+
+    @media (max-width: 750px) {
+        .detail-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+
+<section class="order-detail-page">
+
+    <div class="order-detail-container">
+
+        <div class="order-detail-header">
+
+            <h1>
+                Order #{{ order.order_id }}
+            </h1>
+
+            <p>
+                Placed on
+                {{ order.created_at|date:"d M Y, h:i A" }}
+            </p>
+
+        </div>
+
+
+        <div class="detail-grid">
+
+            <div class="detail-card">
+
+                <h2>Order Items</h2>
+
+                {% for item in order.items.all %}
+
+                    <div class="detail-item">
+
+                        <span>
+                            {{ item.product_name }}
+                            × {{ item.quantity }}
+                        </span>
+
+                        <strong>
+                            ₹{{ item.total }}
+                        </strong>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div>
+
+                <div class="detail-card">
+
+                    <h2>Order Summary</h2>
+
+                    <div class="detail-item">
+                        <span>Subtotal</span>
+                        <strong>₹{{ order.subtotal }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Shipping</span>
+                        <strong>₹{{ order.shipping }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Total</span>
+                        <strong>₹{{ order.total }}</strong>
+                    </div>
+
+                    <div class="detail-item">
+                        <span>Payment</span>
+                        <strong>
+                            {{ order.get_payment_method_display }}
+                        </strong>
+                    </div>
+
+                    <a
+                        href="{% url 'orders:track_order' order.order_id %}"
+                        class="track-button"
+                    >
+                        Track This Order
+                    </a>
+
+                </div>
+
+
+                <div class="detail-card" style="margin-top: 20px;">
+
+                    <h2>Delivery Address</h2>
+
+                    <div class="address">
+
+                        <strong>
+                            {{ order.customer_name }}
+                        </strong>
+
+                        <br>
+
+                        {{ order.address }}
+
+                        <br>
+
+                        {{ order.city }},
+                        {{ order.state }}
+                        - {{ order.pincode }}
+
+                        <br><br>
+
+                        Phone: {{ order.phone }}
+
+                        {% if order.email %}
+                            <br>
+                            Email: {{ order.email }}
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
