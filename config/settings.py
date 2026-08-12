@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 
-
 # ============================================================
 # BASE DIRECTORY
 # ============================================================
@@ -13,20 +12,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 # ============================================================
 
-# IMPORTANT:
-# Replace this with a new secret key before publishing.
 SECRET_KEY = os.environ.get(
     "DJANGO_SECRET_KEY",
-    "CHANGE-THIS-TO-A-LONG-RANDOM-SECRET-KEY-BEFORE-PUBLISHING-2026",
+    "django-insecure-local-development-key-change-in-production",
 )
 
-# DEBUG OFF FOR DEPLOYMENT
-DEBUG = False
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-# Add your real domain here when you have one.
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
+    ".onrender.com",
 ]
 
 
@@ -54,17 +50,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-
     "django.contrib.sessions.middleware.SessionMiddleware",
-
     "django.middleware.common.CommonMiddleware",
-
     "django.middleware.csrf.CsrfViewMiddleware",
-
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-
     "django.contrib.messages.middleware.MessageMiddleware",
-
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -83,19 +73,14 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
         "DIRS": [
             BASE_DIR / "templates",
         ],
-
         "APP_DIRS": True,
-
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
-
                 "django.contrib.auth.context_processors.auth",
-
                 "django.contrib.messages.context_processors.messages",
             ],
         },
@@ -213,18 +198,17 @@ LOGOUT_REDIRECT_URL = "/"
 # EMAIL
 # ============================================================
 
-# Development email backend.
-# Later, before launch, we can connect your real email.
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-DEFAULT_FROM_EMAIL = "ZAHRA CREATION <noreply@zahra-creation.local>"
+DEFAULT_FROM_EMAIL = (
+    "ZAHRA CREATION <noreply@zahra-creation.local>"
+)
 
 
 # ============================================================
 # RAZORPAY
 # ============================================================
 
-# Keep your real Razorpay keys in environment variables.
 RAZORPAY_KEY_ID = os.environ.get(
     "RAZORPAY_KEY_ID",
     "",
@@ -244,22 +228,26 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 14
 
 SESSION_SAVE_EVERY_REQUEST = False
 
+SESSION_COOKIE_SAMESITE = "Lax"
+
+CSRF_COOKIE_SAMESITE = "Lax"
+
 
 # ============================================================
-# SECURITY SETTINGS
+# PRODUCTION SECURITY
 # ============================================================
 
-# These are intentionally NOT enabled yet because your
-# local/deployment HTTPS setup has not been configured.
-#
-# After your real website has HTTPS, we will enable:
-#
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-# SECURE_HSTS_SECONDS = 31536000
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = False
+
+SESSION_COOKIE_SECURE = False
+
+CSRF_COOKIE_SECURE = False
+
+SECURE_HSTS_SECONDS = 0
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+
+SECURE_HSTS_PRELOAD = False
 
 
 # ============================================================
@@ -267,7 +255,3 @@ SESSION_SAVE_EVERY_REQUEST = False
 # ============================================================
 
 CSRF_COOKIE_HTTPONLY = True
-
-CSRF_COOKIE_SAMESITE = "Lax"
-
-SESSION_COOKIE_SAMESITE = "Lax"
