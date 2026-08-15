@@ -23,6 +23,9 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
     ".onrender.com",
+    ".up.railway.app",
+    "zahracreation.com",
+    "www.zahracreation.com",
 ]
 
 
