@@ -29,6 +29,12 @@ ALLOWED_HOSTS = [
     "www.zahracreation.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://zahracreation.com",
+    "https://www.zahracreation.com",
+    "https://*.up.railway.app",
+]
+
 
 # ============================================================
 # APPLICATIONS
