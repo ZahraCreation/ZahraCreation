@@ -4,90 +4,79 @@
 ZAHRA CREATION | Premium Bags
 {% endblock %}
 
-
 {% block content %}
 
-<section class="section">
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
 
+<section class="section">
     <div class="container">
 
-        <div
-            style="
-                display: grid;
-                grid-template-columns:
-                    repeat(auto-fit, minmax(280px, 1fr));
-                gap: 50px;
-                align-items: center;
-                min-height: 500px;
-            "
-        >
+        <div style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            align-items: center;
+            min-height: 500px;
+        ">
 
             <div>
 
-                <p class="section-heading">
+                <p class="section-heading" style="text-align: left; margin-bottom: 15px;">
                     <span class="eyebrow">
                         ZAHRA CREATION
                     </span>
                 </p>
 
-                <h1
-                    style="
-                        font-family: Georgia, 'Times New Roman', serif;
-                        font-size: clamp(42px, 7vw, 76px);
-                        font-weight: 500;
-                        line-height: 1.05;
-                        color: var(--brown-dark);
-                        margin-bottom: 22px;
-                    "
-                >
+                <h1 style="
+                    font-family: Georgia, 'Times New Roman', serif;
+                    font-size: clamp(42px, 7vw, 76px);
+                    font-weight: 500;
+                    line-height: 1.05;
+                    color: var(--brown-dark);
+                    margin-bottom: 22px;
+                ">
                     Carry elegance.
                     <br>
                     Carry <em>Zahra.</em>
                 </h1>
 
-                <p
-                    style="
-                        max-width: 560px;
-                        color: var(--muted);
-                        font-size: 17px;
-                        margin-bottom: 30px;
-                    "
-                >
-                    Discover beautifully designed bags
-                    created for everyday moments,
-                    special occasions and everything
-                    in between.
+                <p style="
+                    max-width: 560px;
+                    color: var(--muted);
+                    font-size: 17px;
+                    margin-bottom: 30px;
+                ">
+                    Discover beautifully designed bags created
+                    for everyday moments, special occasions
+                    and everything in between.
                 </p>
 
-                <a
-                    href="#featured"
-                    class="btn btn-primary"
-                >
+                <a href="#featured" class="btn btn-primary">
                     Explore Collection
                 </a>
 
             </div>
 
-
-            <div
-                style="
-                    min-height: 420px;
-                    border-radius: 30px;
-                    background:
-                        linear-gradient(
-                            145deg,
-                            var(--pink-light),
-                            var(--beige)
-                        );
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    overflow: hidden;
-                    box-shadow: var(--shadow);
-                "
-            >
+            <div style="
+                min-height: 420px;
+                border-radius: 30px;
+                background:
+                    linear-gradient(
+                        145deg,
+                        var(--pink-light),
+                        var(--beige)
+                    );
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                box-shadow: var(--shadow);
+            ">
 
                 {% if featured_products %}
+
                     {% with featured_products|first as hero_product %}
 
                         {% if hero_product.main_image %}
@@ -104,16 +93,11 @@ ZAHRA CREATION | Premium Bags
 
                         {% else %}
 
-                            <span
-                                style="
-                                    color: var(--brown);
-                                    font-family:
-                                        Georgia,
-                                        'Times New Roman',
-                                        serif;
-                                    font-size: 28px;
-                                "
-                            >
+                            <span style="
+                                color: var(--brown);
+                                font-family: Georgia, 'Times New Roman', serif;
+                                font-size: 28px;
+                            ">
                                 ZAHRA CREATION
                             </span>
 
@@ -123,16 +107,11 @@ ZAHRA CREATION | Premium Bags
 
                 {% else %}
 
-                    <span
-                        style="
-                            color: var(--brown);
-                            font-family:
-                                Georgia,
-                                'Times New Roman',
-                                serif;
-                            font-size: 28px;
-                        "
-                    >
+                    <span style="
+                        color: var(--brown);
+                        font-family: Georgia, 'Times New Roman', serif;
+                        font-size: 28px;
+                    ">
                         ZAHRA CREATION
                     </span>
 
@@ -143,21 +122,21 @@ ZAHRA CREATION | Premium Bags
         </div>
 
     </div>
-
 </section>
 
 
-<section
-    class="section"
-    id="featured"
->
+<!-- ========================= -->
+<!-- FEATURED PRODUCTS -->
+<!-- ========================= -->
+
+<section class="section" id="featured">
 
     <div class="container">
 
         <div class="section-heading">
 
             <p class="eyebrow">
-                Created For you
+                Created For You
             </p>
 
             <h2>
@@ -179,62 +158,39 @@ ZAHRA CREATION | Premium Bags
 
                     <article class="product-card">
 
-                        <div class="product-image">
+                        <a href="{{ product.get_absolute_url }}">
 
-                            {% if product.main_image %}
+                            <div class="product-image">
 
-                                <img
-                                    src="{{ product.main_image.url }}"
-                                    alt="{{ product.name }}"
-                                >
+                                {% if product.main_image %}
 
-                            {% else %}
+                                    <img
+                                        src="{{ product.main_image.url }}"
+                                        alt="{{ product.name }}"
+                                    >
 
-                                <div
-                                    style="
+                                {% else %}
+
+                                    <div style="
                                         width: 100%;
                                         height: 100%;
                                         display: flex;
                                         align-items: center;
                                         justify-content: center;
                                         color: var(--brown);
-                                        font-family:
-                                            Georgia,
-                                            'Times New Roman',
-                                            serif;
-                                    "
-                                >
-                                    ZAHRA
-                                </div>
+                                        font-family: Georgia, 'Times New Roman', serif;
+                                        font-size: 22px;
+                                    ">
+                                        ZAHRA
+                                    </div>
 
-                            {% endif %}
+                                {% endif %}
 
-
-                            {% if product.discount_percentage > 0 %}
-
-                                <span class="product-badge">
-                                    {{ product.discount_percentage }}% OFF
-                                </span>
-
-                            {% endif %}
-
-                        </div>
-
-
-                        <div class="product-info">
-
-                            <h3 class="product-name">
-                                {{ product.name }}
-                            </h3>
-
-                            <div class="product-price">
-
-                                ₹{{ product.discounted_price|floatformat:2 }}
 
                                 {% if product.discount_percentage > 0 %}
 
-                                    <span class="product-old-price">
-                                        ₹{{ product.price|floatformat:2 }}
+                                    <span class="product-badge">
+                                        {{ product.discount_percentage|floatformat:0 }}% OFF
                                     </span>
 
                                 {% endif %}
@@ -242,27 +198,85 @@ ZAHRA CREATION | Premium Bags
                             </div>
 
 
-                            {% if product.stock <= 0 %}
+                            <div class="product-info">
 
-                                <span class="product-stock stock-out">
+                                <h3 class="product-name">
+                                    {{ product.name }}
+                                </h3>
+
+                                <div class="product-price">
+
+                                    ₹{{ product.discounted_price|floatformat:2 }}
+
+                                    {% if product.discount_percentage > 0 %}
+
+                                        <span class="product-old-price">
+                                            ₹{{ product.price|floatformat:2 }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                {% if product.stock <= 0 %}
+
+                                    <span class="product-stock stock-out">
+                                        Out of Stock
+                                    </span>
+
+                                {% elif product.stock <= 5 %}
+
+                                    <span class="product-stock stock-low">
+                                        Only {{ product.stock }} left
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="product-stock stock-in">
+                                        In Stock
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </a>
+
+                        {% if product.stock > 0 %}
+
+                            <div style="padding: 0 18px 18px;">
+
+                                <a
+                                    href="{{ product.get_absolute_url }}"
+                                    class="btn btn-primary"
+                                    style="width: 100%;"
+                                >
+                                    View Product
+                                </a>
+
+                            </div>
+
+                        {% else %}
+
+                            <div style="padding: 0 18px 18px;">
+
+                                <button
+                                    class="btn"
+                                    type="button"
+                                    disabled
+                                    style="
+                                        width: 100%;
+                                        cursor: not-allowed;
+                                        opacity: 0.55;
+                                    "
+                                >
                                     Out of Stock
-                                </span>
+                                </button>
 
-                            {% elif product.stock <= 5 %}
+                            </div>
 
-                                <span class="product-stock stock-low">
-                                    Only {{ product.stock }} left
-                                </span>
-
-                            {% else %}
-
-                                <span class="product-stock stock-in">
-                                    In Stock
-                                </span>
-
-                            {% endif %}
-
-                        </div>
+                        {% endif %}
 
                     </article>
 
@@ -292,6 +306,10 @@ ZAHRA CREATION | Premium Bags
 </section>
 
 
+<!-- ========================= -->
+<!-- CATEGORIES -->
+<!-- ========================= -->
+
 <section class="section">
 
     <div class="container">
@@ -318,7 +336,7 @@ ZAHRA CREATION | Premium Bags
                     <div
                         class="product-card"
                         style="
-                            min-height: 180px;
+                            min-height: 220px;
                             display: flex;
                             align-items: flex-end;
                             padding: 25px;
@@ -342,12 +360,10 @@ ZAHRA CREATION | Premium Bags
 
                         {% endif %}
 
-                        <div
-                            style="
-                                position: relative;
-                                z-index: 2;
-                            "
-                        >
+                        <div style="
+                            position: relative;
+                            z-index: 2;
+                        ">
 
                             <h3 class="product-name">
                                 {{ category.name }}
@@ -355,12 +371,10 @@ ZAHRA CREATION | Premium Bags
 
                             {% if category.description %}
 
-                                <p
-                                    style="
-                                        color: var(--muted);
-                                        font-size: 13px;
-                                    "
-                                >
+                                <p style="
+                                    color: var(--muted);
+                                    font-size: 13px;
+                                ">
                                     {{ category.description }}
                                 </p>
 
@@ -383,8 +397,7 @@ ZAHRA CREATION | Premium Bags
                 </h3>
 
                 <p>
-                    We're preparing our collection
-                    for you.
+                    We're preparing our collection for you.
                 </p>
 
             </div>
@@ -396,6 +409,10 @@ ZAHRA CREATION | Premium Bags
 </section>
 
 
+<!-- ========================= -->
+<!-- NEW ARRIVALS -->
+<!-- ========================= -->
+
 <section class="section">
 
     <div class="container">
@@ -403,12 +420,16 @@ ZAHRA CREATION | Premium Bags
         <div class="section-heading">
 
             <p class="eyebrow">
-                Fresh arrivals
+                Fresh Arrivals
             </p>
 
             <h2>
                 New Arrivals
             </h2>
+
+            <p>
+                Explore the newest additions to ZAHRA CREATION.
+            </p>
 
         </div>
 
@@ -421,50 +442,69 @@ ZAHRA CREATION | Premium Bags
 
                     <article class="product-card">
 
-                        <div class="product-image">
+                        <a href="{{ product.get_absolute_url }}">
 
-                            {% if product.main_image %}
+                            <div class="product-image">
 
-                                <img
-                                    src="{{ product.main_image.url }}"
-                                    alt="{{ product.name }}"
-                                >
+                                {% if product.main_image %}
 
-                            {% endif %}
+                                    <img
+                                        src="{{ product.main_image.url }}"
+                                        alt="{{ product.name }}"
+                                    >
 
-                        </div>
+                                {% else %}
 
-                        <div class="product-info">
+                                    <div style="
+                                        width: 100%;
+                                        height: 100%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        color: var(--brown);
+                                    ">
+                                        ZAHRA
+                                    </div>
 
-                            <h3 class="product-name">
-                                {{ product.name }}
-                            </h3>
+                                {% endif %}
 
-                            <div class="product-price">
-                                ₹{{ product.discounted_price|floatformat:2 }}
                             </div>
 
-                            {% if product.stock <= 0 %}
 
-                                <span class="product-stock stock-out">
-                                    Out of Stock
-                                </span>
+                            <div class="product-info">
 
-                            {% elif product.stock <= 5 %}
+                                <h3 class="product-name">
+                                    {{ product.name }}
+                                </h3>
 
-                                <span class="product-stock stock-low">
-                                    Low Stock
-                                </span>
+                                <div class="product-price">
+                                    ₹{{ product.discounted_price|floatformat:2 }}
+                                </div>
 
-                            {% else %}
 
-                                <span class="product-stock stock-in">
-                                    In Stock
-                                </span>
+                                {% if product.stock <= 0 %}
 
-                            {% endif %}
+                                    <span class="product-stock stock-out">
+                                        Out of Stock
+                                    </span>
 
-                        </div>
+                                {% elif product.stock <= 5 %}
+
+                                    <span class="product-stock stock-low">
+                                        Only {{ product.stock }} left
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="product-stock stock-in">
+                                        In Stock
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </a>
 
                     </article>
 
@@ -493,6 +533,10 @@ ZAHRA CREATION | Premium Bags
 </section>
 
 
+<!-- ========================= -->
+<!-- BEST SELLERS -->
+<!-- ========================= -->
+
 <section class="section">
 
     <div class="container">
@@ -507,6 +551,10 @@ ZAHRA CREATION | Premium Bags
                 Best Sellers
             </h2>
 
+            <p>
+                Our most popular ZAHRA CREATION pieces.
+            </p>
+
         </div>
 
 
@@ -518,44 +566,69 @@ ZAHRA CREATION | Premium Bags
 
                     <article class="product-card">
 
-                        <div class="product-image">
+                        <a href="{{ product.get_absolute_url }}">
 
-                            {% if product.main_image %}
+                            <div class="product-image">
 
-                                <img
-                                    src="{{ product.main_image.url }}"
-                                    alt="{{ product.name }}"
-                                >
+                                {% if product.main_image %}
 
-                            {% endif %}
+                                    <img
+                                        src="{{ product.main_image.url }}"
+                                        alt="{{ product.name }}"
+                                    >
 
-                        </div>
+                                {% else %}
 
-                        <div class="product-info">
+                                    <div style="
+                                        width: 100%;
+                                        height: 100%;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        color: var(--brown);
+                                    ">
+                                        ZAHRA
+                                    </div>
 
-                            <h3 class="product-name">
-                                {{ product.name }}
-                            </h3>
+                                {% endif %}
 
-                            <div class="product-price">
-                                ₹{{ product.discounted_price|floatformat:2 }}
                             </div>
 
-                            {% if product.stock <= 0 %}
 
-                                <span class="product-stock stock-out">
-                                    Out of Stock
-                                </span>
+                            <div class="product-info">
 
-                            {% else %}
+                                <h3 class="product-name">
+                                    {{ product.name }}
+                                </h3>
 
-                                <span class="product-stock stock-in">
-                                    In Stock
-                                </span>
+                                <div class="product-price">
+                                    ₹{{ product.discounted_price|floatformat:2 }}
+                                </div>
 
-                            {% endif %}
 
-                        </div>
+                                {% if product.stock <= 0 %}
+
+                                    <span class="product-stock stock-out">
+                                        Out of Stock
+                                    </span>
+
+                                {% elif product.stock <= 5 %}
+
+                                    <span class="product-stock stock-low">
+                                        Only {{ product.stock }} left
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="product-stock stock-in">
+                                        In Stock
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+                        </a>
 
                     </article>
 
@@ -585,56 +658,49 @@ ZAHRA CREATION | Premium Bags
 </section>
 
 
+<!-- ========================= -->
+<!-- BRAND MESSAGE -->
+<!-- ========================= -->
+
 <section
     class="section"
-    style="
-        padding-bottom: 90px;
-    "
+    style="padding-bottom: 90px;"
 >
 
     <div class="container">
 
-        <div
-            style="
-                padding: 55px 30px;
-                border-radius: 30px;
-                background:
-                    linear-gradient(
-                        135deg,
-                        var(--pink-light),
-                        var(--beige)
-                    );
-                text-align: center;
-                box-shadow: var(--shadow);
-            "
-        >
+        <div style="
+            padding: 55px 30px;
+            border-radius: 30px;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--pink-light),
+                    var(--beige)
+                );
+            text-align: center;
+            box-shadow: var(--shadow);
+        ">
 
             <p class="eyebrow">
                 ZAHRA CREATION
             </p>
 
-            <h2
-                style="
-                    margin: 8px 0 15px;
-                    color: var(--brown-dark);
-                    font-family:
-                        Georgia,
-                        'Times New Roman',
-                        serif;
-                    font-size: clamp(30px, 5vw, 46px);
-                    font-weight: 500;
-                "
-            >
+            <h2 style="
+                margin: 8px 0 15px;
+                color: var(--brown-dark);
+                font-family: Georgia, 'Times New Roman', serif;
+                font-size: clamp(30px, 5vw, 46px);
+                font-weight: 500;
+            ">
                 Made to be remembered.
             </h2>
 
-            <p
-                style="
-                    max-width: 600px;
-                    margin: 0 auto;
-                    color: var(--muted);
-                "
-            >
+            <p style="
+                max-width: 600px;
+                margin: 0 auto;
+                color: var(--muted);
+            ">
                 Elegant designs, thoughtful details
                 and bags made to become part of
                 your everyday story.

@@ -50,6 +50,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+
+    # WhiteNoise
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -168,6 +172,23 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # ============================================================
+# WHITENOISE STATIC FILE STORAGE
+# ============================================================
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage."
+            "CompressedManifestStaticFilesStorage"
+        ),
+    },
+}
+
+
+# ============================================================
 # MEDIA / PRODUCT IMAGES
 # ============================================================
 
@@ -200,9 +221,7 @@ LOGOUT_REDIRECT_URL = "/"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-DEFAULT_FROM_EMAIL = (
-    "ZAHRA CREATION <noreply@zahra-creation.local>"
-)
+DEFAULT_FROM_EMAIL = "ZAHRA CREATION <noreply@zahra-creation.local>"
 
 
 # ============================================================
